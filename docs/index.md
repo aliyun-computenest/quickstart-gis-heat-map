@@ -1,131 +1,74 @@
-# Demo服务实例部署文档
+# Build a Heat Map Tile App with Alibaba Cloud ECS & PostgreSQL
 
-## 概述
+>**Disclaimers：**This service is provided by a third party, and we make every effort to ensure its security, accuracy, and reliability, but we cannot guarantee that it is completely free from failures, interruptions, errors, or attacks. Therefore, our company hereby declares that we make no representations, warranties or commitments regarding the content, accuracy, completeness, reliability, applicability, and timeliness of this service, and we are not liable for any direct or indirect losses or damages arising from your use of this service; For the third-party websites, applications, products, and services accessed by you through this service, you are not responsible for their content, accuracy, completeness, reliability, applicability, and timeliness. You shall bear the risks and responsibilities arising from the consequences of use on your own; We are not responsible for any losses or damages arising from your use of this service, including but not limited to direct, indirect, profit, goodwill, data or other economic losses, even if our company has been informed in advance of the possibility of such losses or damages; We reserve the right to modify this statement from time to time, so please regularly check this statement before using this service. If you have any questions or concerns about this statement or this service, please contact us.
 
-`(服务概述内容)`。
+## Overview
 
-```
-eg：
+A Heat Map Tile is a data visualization tool that represents the spatial distribution of data by overlaying colored tiles on a map. Each tile's color intensity reflects the magnitude or concentration of a particular metric within that area. Heat Map Tiles are often used to visualize geographic data, making it easier to identify patterns, trends, and outliers at a glance.
 
-Demo服务是计算巢提供的示例。
-本文向您介绍如何开通计算巢上的`Demo`服务，以及部署流程和使用说明。
-```
+## Billing instructions
 
-## 计费说明
+The expenses on Hmt mainly involve：
 
-`(计费说明内容)`
+- Selected vCPU and memory specifications
+- System disk type and capacity
+- Public network bandwidth
+- Cloud database PostGreSQL specifications and storage space
 
-```
-eg:
+## Deployment Architecture
 
-Demo在计算巢上的费用主要涉及：
+<img src="1.png" width="1500" height="700" align="bottom"/>
 
-- 所选vCPU与内存规格
-- 系统盘类型及容量
-- 公网带宽
+## Parameter Description
 
-计费方式包括：
+| Parameter Group            | Parameter item          | illustrate                                                                                                                                           |
+|----------------------------|-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Service Instance           | Service Instance Name   | The name can be up to 64 characters in length, and can contain digits, letters, hyphens (-), and underscores (_). The name must start with a letter. |
+|                            | Region                  | The region where the service instance is deployed.                                                                                                   |
+|                            | Instance Charge Type    | Charge type for the service instance.                                                                                                                |
+| ECS instance configuration | Instance Type           | ECS instance type                                                                                                                                    |
+|                            | Instance Password       | Server login password, Length 8-30, must contain three(Capital letters, lowercase letters, numbers, ()`~!@#$%^&*_-+={}[]:;'<>,.?/ Special symbol in) |
+| network configuration      | Availability Zone       | The availability zone where the ECS instance is located                                                                                              |
+|                            | VPC ID                  | VPC where resources are located                                                                                                                      |
+|                            | VSwitch ID              | The availability zone of the VSwitch                                                                                                                 |
+| PostGreSQL configuration   | Instance specifications | The specifications of PostGreSQL instances that can be used in the availability zone                                                                 |
+|                            | DatabaseName            | Database Name                                                                                                                                        |
+|                            | AccountName             | Account Name                                                                                                                                         |
+|                            | EngineVersion           | Engine Version                                                                                                                                       |
 
-- 按量付费（小时）
-- 包年包月
+## Permissions required
 
-目前提供如下实例：
+Deploying this service instance requires accessing and creating some Alibaba Cloud resources. Therefore, your account needs to include permissions for the following resources.
+  **Note**：You only need to add this permission when your account is a RAM account.
 
-| 规格族 | vCPU与内存 | 系统盘 | 公网带宽 |
-| --- | --- | --- | --- |
-| ecs.r6.xlarge | 内存型r6，4vCPU 32GiB | ESSD云盘 200GiB PL0 | 固定带宽1Mbps |
+| Permission policy name                 | Remarks                                                                             |
+|----------------------------------------|-------------------------------------------------------------------------------------|
+| AliyunECSFullAccess                    | Permission to manage cloud server service (ECS)                                     |
+| AliyunVPCFullAccess                    | Permission to manage private network (VPC)                                          |
+| AliyunROSFullAccess                    | Permission to manage Resource Orchestration Service (ROS)                           |
+| AliyunComputeNestUserFullAccess        | Manage user-side permissions for the ComputeNest service (ComputeNest)              |
+| AliyunPostGreSQLFullAccess             | Manage permissions for cloud database services (PostGreSQL)                         |
 
-预估费用在创建实例时可实时看到。
-如需更多规格、其他服务（如集群高可用性要求、企业级支持服务等），请联系我们 [mailto:xx@xx.com](mailto:xx@xx.com)。
+## Deployment steps
 
-```
+1.Visit Deployment Link and fill in the deployment parameters as prompted:[Deployment link](https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&ServiceId=service-3fc795faef2148658afe)
 
-## 部署架构
+![image.png](2.png)
 
-`(部署概述内容)`
+2.After filling in the deployment link parameters, you can see the corresponding inquiry details. After confirming the parameters, click**Next step: Confirm the order**.
 
-## RAM账号所需权限
+![image.png](3.png)
 
-`(权限策略内容)`
+3.After confirming the completion of the order, agree to the service agreement and click **Create Now** to enter the deployment phase.
 
-```
-eg: 
+![image.png](4.png)
 
-Demo服务需要对ECS、VPC等资源进行访问和创建操作，若您使用RAM用户创建服务实例，需要在创建服务实例前，对使用的RAM用户的账号添加相应资源的权限。添加RAM权限的详细操作，请参见[为RAM用户授权](https://help.aliyun.com/document_detail/121945.html)。所需权限如下表所示。
+4.Wait for deployment to complete before entering service instance management.
 
+5.Find Hmt links in the console and copy them to the browser to access them.
 
-| 权限策略名称 | 备注 |
-| --- | --- |
-| AliyunECSFullAccess | 管理云服务器服务（ECS）的权限 |
+![image.png](5.png)
+![image.png](6.png)
 
-```
-
-## 部署流程
-
-### 部署步骤
-
-`(部署步骤内容)`
-
-```
-eg:
-
-1. 单击部署链接，进入服务实例部署界面，根据界面提示，填写参数完成部署。
-2. 补充示意图。
-```
-### 部署参数说明
-
-`(部署参数说明内容)`
-
-```
-eg:
-
-您在创建服务实例的过程中，需要配置服务实例信息。下文介绍云XR实时渲染平台服务实例输入参数的详细信息。
-
-| 参数组 | 参数项 | 示例 | 说明 |
-| --- | --- | --- | --- |
-| 服务实例名称 |  | test | 实例的名称 |
-| 地域 |  | 华北2（北京） | 选中服务实例的地域，建议就近选中，以获取更好的网络延时。 |
-```
-
-### 验证结果
-
-`(验证结果内容)`
-
-```
-eg:
-
-1. 查看服务实例。服务实例创建成功后，部署时间大约需要2分钟。部署完成后，页面上可以看到对应的服务实例。 
-2. 通过服务实例访问TuGraph。进入到对应的服务实例后，可以在页面上获取到web、rpc、ssh共3种使用方式。
-```
-
-### 使用Demo
-
-`(服务使用说明内容)`
-
-```
-eg:
-
-请访问Demo官网了解如何使用：[使用文档](https://www.aliyun.com)
-```
-
-## 问题排查
-
-`(服务使用说明内容)`
-
-```
-eg:
-
-请访问[Demo的问题排查链接](https://www.aliyun.com)获取帮助。
-```
-
-## 联系我们
-
-欢迎访问Demo官网（[https://www.aliyun.com](https://www.aliyun.com)）了解更多信息。
-
-联系邮箱：[https://www.aliyun.com](mailto:https://www.aliyun.com)
-
-社区版开源地址：[https://github.com/](https://github.com/)
-
-扫码关注微信公众号，技术博客、活动通知不容错过：
-
-`(添加二维码图片)`
+## Reference documents
+https://aliyuque.antfin.com/xdc01323960/tyfivo/id1gp04h7kp3n66b?singleDoc=
