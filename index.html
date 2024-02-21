@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>Build a Heat Map Tile App with Alibaba Cloud ECS & PostgreSQL - Aliyun 计算巢 x Demo</title>
+
+  <link rel="shortcut icon" href="img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="search/main.js"></script>
+  
+
+  
+
+  <script src="js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#build-a-heat-map-tile-app-with-alibaba-cloud-ecs-postgresql">Build a Heat Map Tile App with Alibaba Cloud ECS &amp; PostgreSQL</a></li>
+              
+                  <li><a href="#overview">Overview</a></li>
+                  
+              
+                  <li><a href="#billing-instructions">Billing instructions</a></li>
+                  
+              
+                  <li><a href="#deployment-architecture">Deployment Architecture</a></li>
+                  
+              
+                  <li><a href="#parameter-description">Parameter Description</a></li>
+                  
+              
+                  <li><a href="#permissions-required">Permissions required</a></li>
+                  
+              
+                  <li><a href="#deployment-steps">Deployment steps</a></li>
+                  
+              
+                  <li><a href="#reference-documents">Reference documents</a></li>
+                  
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="build-a-heat-map-tile-app-with-alibaba-cloud-ecs-postgresql">Build a Heat Map Tile App with Alibaba Cloud ECS &amp; PostgreSQL</h1>
+<blockquote>
+<p><strong>Disclaimers：</strong>This service is provided by a third party, and we make every effort to ensure its security, accuracy, and reliability, but we cannot guarantee that it is completely free from failures, interruptions, errors, or attacks. Therefore, our company hereby declares that we make no representations, warranties or commitments regarding the content, accuracy, completeness, reliability, applicability, and timeliness of this service, and we are not liable for any direct or indirect losses or damages arising from your use of this service; For the third-party websites, applications, products, and services accessed by you through this service, you are not responsible for their content, accuracy, completeness, reliability, applicability, and timeliness. You shall bear the risks and responsibilities arising from the consequences of use on your own; We are not responsible for any losses or damages arising from your use of this service, including but not limited to direct, indirect, profit, goodwill, data or other economic losses, even if our company has been informed in advance of the possibility of such losses or damages; We reserve the right to modify this statement from time to time, so please regularly check this statement before using this service. If you have any questions or concerns about this statement or this service, please contact us.</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>A Heat Map Tile is a data visualization tool that represents the spatial distribution of data by overlaying colored tiles on a map. Each tile's color intensity reflects the magnitude or concentration of a particular metric within that area. Heat Map Tiles are often used to visualize geographic data, making it easier to identify patterns, trends, and outliers at a glance.</p>
+<h2 id="billing-instructions">Billing instructions</h2>
+<p>The expenses on Hmt mainly involve：</p>
+<ul>
+<li>Selected vCPU and memory specifications</li>
+<li>System disk type and capacity</li>
+<li>Public network bandwidth</li>
+<li>Cloud database PostGreSQL specifications and storage space</li>
+</ul>
+<h2 id="deployment-architecture">Deployment Architecture</h2>
+<p><img src="1.png" width="1500" height="700" align="bottom"/></p>
+<h2 id="parameter-description">Parameter Description</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter Group</th>
+<th>Parameter item</th>
+<th>illustrate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Service Instance</td>
+<td>Service Instance Name</td>
+<td>The name can be up to 64 characters in length, and can contain digits, letters, hyphens (-), and underscores (_). The name must start with a letter.</td>
+</tr>
+<tr>
+<td></td>
+<td>Region</td>
+<td>The region where the service instance is deployed.</td>
+</tr>
+<tr>
+<td></td>
+<td>Instance Charge Type</td>
+<td>Charge type for the service instance.</td>
+</tr>
+<tr>
+<td>ECS instance configuration</td>
+<td>Instance Type</td>
+<td>ECS instance type</td>
+</tr>
+<tr>
+<td></td>
+<td>Instance Password</td>
+<td>Server login password, Length 8-30, must contain three(Capital letters, lowercase letters, numbers, ()`~!@#$%^&amp;*_-+={}[]:;'&lt;&gt;,.?/ Special symbol in)</td>
+</tr>
+<tr>
+<td>network configuration</td>
+<td>Availability Zone</td>
+<td>The availability zone where the ECS instance is located</td>
+</tr>
+<tr>
+<td></td>
+<td>VPC ID</td>
+<td>VPC where resources are located</td>
+</tr>
+<tr>
+<td></td>
+<td>VSwitch ID</td>
+<td>The availability zone of the VSwitch</td>
+</tr>
+<tr>
+<td>PostGreSQL configuration</td>
+<td>Instance specifications</td>
+<td>The specifications of PostGreSQL instances that can be used in the availability zone</td>
+</tr>
+<tr>
+<td></td>
+<td>DatabaseName</td>
+<td>Database Name(default hmt)</td>
+</tr>
+<tr>
+<td></td>
+<td>AccountName</td>
+<td>Account Name(default hmt_user)</td>
+</tr>
+<tr>
+<td></td>
+<td>EngineVersion</td>
+<td>Engine Version</td>
+</tr>
+</tbody>
+</table>
+<h2 id="permissions-required">Permissions required</h2>
+<p>Deploying this service instance requires accessing and creating some Alibaba Cloud resources. Therefore, your account needs to include permissions for the following resources.
+  <strong>Note</strong>：You only need to add this permission when your account is a RAM account.</p>
+<table>
+<thead>
+<tr>
+<th>Permission policy name</th>
+<th>Remarks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AliyunECSFullAccess</td>
+<td>Permission to manage cloud server service (ECS)</td>
+</tr>
+<tr>
+<td>AliyunVPCFullAccess</td>
+<td>Permission to manage private network (VPC)</td>
+</tr>
+<tr>
+<td>AliyunROSFullAccess</td>
+<td>Permission to manage Resource Orchestration Service (ROS)</td>
+</tr>
+<tr>
+<td>AliyunComputeNestUserFullAccess</td>
+<td>Manage user-side permissions for the ComputeNest service (ComputeNest)</td>
+</tr>
+<tr>
+<td>AliyunPostGreSQLFullAccess</td>
+<td>Manage permissions for cloud database services (PostgreSQL)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deployment-steps">Deployment steps</h2>
+<p>1.Visit Deployment Link and fill in the deployment parameters as prompted:<a href="https://computenest.console.aliyun.com/service/instance/create/cn-hangzhou?type=user&amp;ServiceId=service-3fc795faef2148658afe">Deployment link</a></p>
+<p><img alt="image.png" src="2.png" /></p>
+<p>2.After filling in the deployment link parameters, you can see the corresponding inquiry details. After confirming the parameters, click <strong>Next step: Confirm the order</strong>.</p>
+<p><img alt="image.png" src="3.png" /></p>
+<p>3.After confirming the completion of the order, agree to the service agreement and click <strong>Create Now</strong> to enter the deployment phase.</p>
+<p><img alt="image.png" src="4.png" /></p>
+<p>4.Wait for deployment to complete before entering service instance management.</p>
+<p>5.Find Hmt links in the console and copy them to the browser to access them.</p>
+<p><img alt="image.png" src="5.png" />
+<img alt="image.png" src="6.png" /></p>
+<h2 id="reference-documents">Reference documents</h2>
+<p>https://aliyuque.antfin.com/xdc01323960/tyfivo/id1gp04h7kp3n66b?singleDoc=</p>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.5.3
+  Docs Build Date UTC : 2024-02-21 08:48:25.215199+00:00
+  -->
+</body>
+</html>
