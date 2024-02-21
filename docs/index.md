@@ -32,8 +32,8 @@ The expenses on Hmt mainly involve：
 |                            | VPC ID                  | VPC where resources are located                                                                                                                      |
 |                            | VSwitch ID              | The availability zone of the VSwitch                                                                                                                 |
 | PostGreSQL configuration   | Instance specifications | The specifications of PostGreSQL instances that can be used in the availability zone                                                                 |
-|                            | DatabaseName            | Database Name                                                                                                                                        |
-|                            | AccountName             | Account Name                                                                                                                                         |
+|                            | DatabaseName            | Database Name(default hmt)                                                                                                                           |
+|                            | AccountName             | Account Name(default hmt_user)                                                                                                                       |
 |                            | EngineVersion           | Engine Version                                                                                                                                       |
 
 ## Permissions required
@@ -41,13 +41,13 @@ The expenses on Hmt mainly involve：
 Deploying this service instance requires accessing and creating some Alibaba Cloud resources. Therefore, your account needs to include permissions for the following resources.
   **Note**：You only need to add this permission when your account is a RAM account.
 
-| Permission policy name                 | Remarks                                                                             |
-|----------------------------------------|-------------------------------------------------------------------------------------|
-| AliyunECSFullAccess                    | Permission to manage cloud server service (ECS)                                     |
-| AliyunVPCFullAccess                    | Permission to manage private network (VPC)                                          |
-| AliyunROSFullAccess                    | Permission to manage Resource Orchestration Service (ROS)                           |
-| AliyunComputeNestUserFullAccess        | Manage user-side permissions for the ComputeNest service (ComputeNest)              |
-| AliyunPostGreSQLFullAccess             | Manage permissions for cloud database services (PostGreSQL)                         |
+| Permission policy name                 | Remarks                                                                |
+|----------------------------------------|------------------------------------------------------------------------|
+| AliyunECSFullAccess                    | Permission to manage cloud server service (ECS)                        |
+| AliyunVPCFullAccess                    | Permission to manage private network (VPC)                             |
+| AliyunROSFullAccess                    | Permission to manage Resource Orchestration Service (ROS)              |
+| AliyunComputeNestUserFullAccess        | Manage user-side permissions for the ComputeNest service (ComputeNest) |
+| AliyunPostGreSQLFullAccess             | Manage permissions for cloud database services (PostgreSQL)            |
 
 ## Deployment steps
 
@@ -55,7 +55,7 @@ Deploying this service instance requires accessing and creating some Alibaba Clo
 
 ![image.png](2.png)
 
-2.After filling in the deployment link parameters, you can see the corresponding inquiry details. After confirming the parameters, click**Next step: Confirm the order**.
+2.After filling in the deployment link parameters, you can see the corresponding inquiry details. After confirming the parameters, click **Next step: Confirm the order**.
 
 ![image.png](3.png)
 
