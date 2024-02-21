@@ -55,7 +55,7 @@ Deploying this service instance requires accessing and creating some Alibaba Clo
 
 ![image.png](2.png)
 
-2.After filling in the deployment link parameters, you can see the corresponding inquiry details. After confirming the parameters, click**Next step: Confirm the order**.
+2.After filling in the deployment link parameters, you can see the corresponding inquiry details. After confirming the parameters, click **Next step: Confirm the order**.
 
 ![image.png](3.png)
 
